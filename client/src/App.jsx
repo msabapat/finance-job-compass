@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import './App.css';
+import SearchBoards from './SearchBoards.jsx';
 
 const DIVISION_TABS = ['All', 'Investment Banking', 'Sales & Trading', 'Research'];
 const TIERS = ['All Tiers', 'Bulge Bracket', 'Elite Boutique', 'Middle Market', 'Regional Boutique', 'Asset Manager', 'Fintech / Startup'];
@@ -12,16 +13,6 @@ const SIDEBAR_CATEGORIES = [
 ];
 
 const YEARS = ['All Years', '2026', '2027', '2028'];
-
-function externalSearchLinks(division) {
-  const query = division === 'All' ? 'investment banking analyst' : `${division.toLowerCase()} analyst`;
-  const q = encodeURIComponent(query);
-  return [
-    { label: 'LinkedIn', url: `https://www.linkedin.com/jobs/search/?keywords=${q}` },
-    { label: 'Indeed', url: `https://www.indeed.com/jobs?q=${q}` },
-    { label: 'Monster', url: `https://www.monster.com/jobs/search?q=${q.replace(/%20/g, '-')}` },
-  ];
-}
 
 function tierLabel(tier) {
   return tier.replace(/ /g, ' ').toUpperCase();
@@ -37,6 +28,7 @@ export default function App() {
   const [year, setYear] = useState('All Years');
   const [sidebarFilter, setSidebarFilter] = useState(null);
   const [saved, setSaved] = useState(() => new Set());
+  const [view, setView] = useState('jobs');
 
   useEffect(() => {
     fetch('/api/jobs')
@@ -82,9 +74,19 @@ export default function App() {
       <header className="topbar">
         <h1>Finance Job Compass</h1>
         <p className="subtitle">Live entry-level finance openings, pulled straight from company career boards.</p>
+        <nav className="tabs">
+          <button className={`tab ${view === 'jobs' ? 'tab-active' : ''}`} onClick={() => setView('jobs')}>
+            Job Listings
+          </button>
+          <button className={`tab ${view === 'search' ? 'tab-active' : ''}`} onClick={() => setView('search')}>
+            Job Board Searches
+          </button>
+        </nav>
       </header>
 
-      <div className="layout">
+      {view === 'search' && <SearchBoards cities={CITIES} />}
+
+      {view === 'jobs' && <div className="layout">
         <aside className="sidebar">
           {SIDEBAR_CATEGORIES.map((cat) => (
             <button
@@ -142,13 +144,6 @@ export default function App() {
             <p className="hint">Showing jobs whose title mentions {year}. Postings that don't name a class year (most experienced-hire and rolling roles) aren't included here.</p>
           )}
 
-          <div className="external-links">
-            <span className="external-label">Search more on:</span>
-            {externalSearchLinks(sidebarFilter && sidebarFilter !== '__saved__' ? sidebarFilter : division).map((l) => (
-              <a key={l.label} className="external-link" href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>
-            ))}
-          </div>
-
           {loading && <p className="status">Loading jobs…</p>}
           {error && <p className="status error">Couldn't load jobs: {error}</p>}
           {!loading && !error && list.length === 0 && (
@@ -181,7 +176,7 @@ export default function App() {
             ))}
           </div>
         </main>
-      </div>
+      </div>}
     </div>
   );
 }
