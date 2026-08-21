@@ -11,6 +11,14 @@ const JOB_TYPES = [
   { key: 'st', label: 'Sales & Trading', queryText: 'sales trading analyst' },
   { key: 'research', label: 'Equity Research', queryText: 'equity research analyst' },
   { key: 'corpfin', label: 'Corporate Finance', queryText: 'corporate finance analyst' },
+  { key: 'financialanalyst', label: 'Financial Analyst', queryText: 'financial analyst' },
+  { key: 'realestate', label: 'Real Estate', queryText: 'real estate analyst' },
+  { key: 'privateequity', label: 'Private Equity', queryText: 'private equity analyst' },
+  { key: 'capitalmarkets', label: 'Capital Markets', queryText: 'capital markets analyst' },
+  { key: 'investmentmanagement', label: 'Investment Management', queryText: 'investment management analyst' },
+  { key: 'fixedincome', label: 'Fixed Income', queryText: 'fixed income analyst' },
+  { key: 'derivatives', label: 'Derivatives', queryText: 'derivatives analyst' },
+  { key: 'venturecapital', label: 'Venture Capital', queryText: 'venture capital analyst' },
 ];
 
 function buildSites(query, location) {
