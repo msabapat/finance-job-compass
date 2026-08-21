@@ -11,6 +11,18 @@ const SIDEBAR_CATEGORIES = [
   'Investment Banking', 'AM / PE / VC', 'Corp Fin / Insurance / Banking', 'Fintech / Startups',
 ];
 
+const YEARS = ['All Years', '2026', '2027', '2028'];
+
+function externalSearchLinks(division) {
+  const query = division === 'All' ? 'investment banking analyst' : `${division.toLowerCase()} analyst`;
+  const q = encodeURIComponent(query);
+  return [
+    { label: 'LinkedIn', url: `https://www.linkedin.com/jobs/search/?keywords=${q}` },
+    { label: 'Indeed', url: `https://www.indeed.com/jobs?q=${q}` },
+    { label: 'Monster', url: `https://www.monster.com/jobs/search?q=${q.replace(/%20/g, '-')}` },
+  ];
+}
+
 function tierLabel(tier) {
   return tier.replace(/ /g, ' ').toUpperCase();
 }
@@ -22,6 +34,7 @@ export default function App() {
   const [division, setDivision] = useState('All');
   const [tier, setTier] = useState('All Tiers');
   const [city, setCity] = useState('All Cities');
+  const [year, setYear] = useState('All Years');
   const [sidebarFilter, setSidebarFilter] = useState(null);
   const [saved, setSaved] = useState(() => new Set());
 
@@ -48,9 +61,10 @@ export default function App() {
       if (!sidebarFilter && division !== 'All' && j.division !== division) return false;
       if (tier !== 'All Tiers' && j.tier !== tier) return false;
       if (city !== 'All Cities' && j.cityGroup !== city) return false;
+      if (year !== 'All Years' && !j.title.includes(year)) return false;
       return true;
     });
-  }, [jobs, division, tier, city, sidebarFilter]);
+  }, [jobs, division, tier, city, year, sidebarFilter]);
 
   function toggleSaved(id) {
     setSaved((prev) => {
@@ -115,6 +129,23 @@ export default function App() {
               <button key={c} className={`chip ${city === c ? 'chip-active' : ''}`} onClick={() => setCity(c)}>
                 {c}
               </button>
+            ))}
+          </div>
+          <div className="filter-row">
+            {YEARS.map((y) => (
+              <button key={y} className={`chip ${year === y ? 'chip-active' : ''}`} onClick={() => setYear(y)}>
+                {y}
+              </button>
+            ))}
+          </div>
+          {year !== 'All Years' && (
+            <p className="hint">Showing jobs whose title mentions {year}. Postings that don't name a class year (most experienced-hire and rolling roles) aren't included here.</p>
+          )}
+
+          <div className="external-links">
+            <span className="external-label">Search more on:</span>
+            {externalSearchLinks(sidebarFilter && sidebarFilter !== '__saved__' ? sidebarFilter : division).map((l) => (
+              <a key={l.label} className="external-link" href={l.url} target="_blank" rel="noreferrer">{l.label} ↗</a>
             ))}
           </div>
 

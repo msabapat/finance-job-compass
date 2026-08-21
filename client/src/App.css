@@ -34,6 +34,19 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple
 }
 .chip-active { background: var(--accent); border-color: var(--accent); color: white; }
 
+.hint { color: var(--muted); font-size: 12px; margin: -4px 0 10px; }
+
+.external-links {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 4px 0 16px; padding-top: 10px; border-top: 1px solid var(--border);
+}
+.external-label { color: var(--muted); font-size: 13px; }
+.external-link {
+  color: var(--accent); font-size: 13px; text-decoration: none;
+  background: rgba(79,124,255,0.1); padding: 5px 10px; border-radius: 999px;
+}
+.external-link:hover { background: rgba(79,124,255,0.2); }
+
 .status { color: var(--muted); padding: 20px 0; }
 .status.error { color: #ff7a7a; }
 
