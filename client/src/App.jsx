@@ -138,10 +138,13 @@ export default function App() {
                 <div className="tags">
                   <span className="tag">{tierLabel(job.tier)}</span>
                   <span className="tag">{job.division}</span>
+                  {job.source === 'manual' && <span className="tag tag-manual">CURATED</span>}
                 </div>
                 <p className="location">{job.location}</p>
                 <div className="card-actions">
-                  <a className="btn-primary" href={job.url} target="_blank" rel="noreferrer">Apply</a>
+                  <a className="btn-primary" href={job.url} target="_blank" rel="noreferrer">
+                    {job.source === 'manual' ? 'View Program' : 'Apply'}
+                  </a>
                 </div>
               </article>
             ))}

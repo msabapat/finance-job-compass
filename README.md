@@ -15,11 +15,18 @@ no manual curation required for firms that are configured.
 - `client/` — React (Vite) frontend that mirrors the IB Compass UI: sidebar category
   counts, division/tier/city filter chips, and a job card grid.
 
-**Coverage caveat:** most bulge-bracket banks (Goldman, JPM, Morgan Stanley, etc.) run
-their own custom career sites or Workday instances without a public JSON API, so they
-can't be auto-tracked this way. Only firms on Greenhouse or Lever (confirmed so far:
-William Blair) are included out of the box. Add more firms to `server/companies.js` as
-you find their board slugs — test a slug with:
+**Coverage caveat:** bulge-bracket banks (Goldman, JPM, Morgan Stanley, BofA, Citi, etc.)
+run custom career portals with no public job-search API — confirmed by hand for Goldman
+Sachs (`higher.gs.com`, client-side GraphQL, no enumerable list endpoint) and JPMorgan
+(`careers.jpmorgan.com`, plain Adobe AEM site, no API at all). They can't be auto-tracked.
+Instead, `server/manualJobs.js` holds a small hand-maintained list of bulge-bracket entries
+that link to each bank's official campus-recruiting hub — these show a "CURATED" badge on
+the card and are re-asserted on every refresh but never auto-expired, since there's no live
+feed to detect they've gone stale. Update that file by hand as programs open/close.
+
+Firms on Greenhouse or Lever are auto-tracked live in `server/companies.js` (currently:
+William Blair, Lincoln International, General Atlantic, Akuna Capital, Robinhood). Add
+more as you find their board slugs — test a slug with:
 
 ```bash
 curl "https://boards-api.greenhouse.io/v1/boards/<slug>/jobs?content=false"

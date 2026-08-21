@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/api/jobs', async (req, res) => {
   const { rows } = await pool.query(
-    `SELECT id, company, tier, division, title, location, city_group AS "cityGroup", url, posted_at AS "postedAt"
+    `SELECT id, company, tier, division, title, location, city_group AS "cityGroup", url, source, posted_at AS "postedAt"
      FROM jobs WHERE is_active = true ORDER BY posted_at DESC NULLS LAST, company ASC`
   );
   res.json(rows);
