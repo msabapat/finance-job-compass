@@ -20,6 +20,7 @@ export async function refreshAllJobs() {
       const rawJobs = await fetcher(company.slug);
       for (const job of rawJobs) {
         if (company.titleFilter && !company.titleFilter.test(job.title)) continue;
+        if (company.excludeFilter && company.excludeFilter.test(job.title)) continue;
         const id = `${company.board}:${company.slug}:${job.externalId}`;
         const division = classifyDivision(job.title, company.divisionRules, company.defaultDivision);
         await pool.query(

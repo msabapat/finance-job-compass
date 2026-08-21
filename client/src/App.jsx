@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import './App.css';
 
 const DIVISION_TABS = ['All', 'Investment Banking', 'Sales & Trading', 'Research'];
-const TIERS = ['All Tiers', 'Bulge Bracket', 'Elite Boutique', 'Middle Market', 'Regional Boutique', 'Asset Manager'];
+const TIERS = ['All Tiers', 'Bulge Bracket', 'Elite Boutique', 'Middle Market', 'Regional Boutique', 'Asset Manager', 'Fintech / Startup'];
 const CITIES = [
   'All Cities', 'New York', 'Philadelphia', 'Chicago', 'Boston', 'San Francisco', 'Los Angeles',
   'Washington DC', 'Miami / Florida', 'Denver / Colorado', 'North Carolina', 'Texas', 'International', 'Other US',
