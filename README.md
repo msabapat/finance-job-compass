@@ -1,5 +1,7 @@
 # Finance Job Compass
 
+Live at: https://financejobs.up.railway.app
+
 A live dashboard of entry-level finance job openings, pulled directly from companies'
 public applicant-tracking-system (ATS) job boards (Greenhouse, Lever) — no scraping,
 no manual curation required for firms that are configured.
